@@ -14,12 +14,6 @@
         <button type="button" onClick="uploadFace()">提交</button>
     </div>
 
-    <div>
-        <img id="upload_1" style="display: none" src="runtime/bg.png">
-        <img id="upload_2" style="display: none" src="runtime/bg.png">
-        <canvas id="canvas" width="384" height="284"></canvas>
-    </div>
-
     <script type="text/javascript">
         var domain_name = 'http://localhost:5678'
 
@@ -41,11 +35,12 @@
                 success: function(res) {
                     console.log(res);
 
-                    $('#upload_1')[0].src = res.img_path
-                    $('#upload_2')[0].src = res.img_path2
-
                     if(res.data.face_num > 0){
-                        drawImg(res.data.face_list[0])
+                        drawImg(
+                            res.data.face_list[0],
+                            domain_name + '/' + res.img_path1,
+                            domain_name + '/' + res.img_path2
+                        )
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -56,25 +51,33 @@
             })
         }
 
-        function drawImg(face_list){
+        function drawImg(face_list,img_path1,img_path2){
             console.log(face_list)
+            console.log(img_path1)
+            console.log(img_path2)
 
-            var img1 = $('#upload_1')[0];
-            var img2 = $('#upload_2')[0];
-            var canvas = $('#canvas')[0];
-            var ctx = canvas.getContext('2d');
+            var canvas=$('<canvas width=400 height=400></canvas>')[0],
+                ctx=canvas.getContext('2d');
 
             var sx = face_list.location.left,
                 sy = face_list.location.top,
                 swidth = face_list.location.width,
                 sheight = face_list.location.height;
 
-            console.log(img1)
-            console.log(img2)
+            img1 = new Image()
+            img1.onload = () => {
+                ctx.drawImage(img1, sx, sy, swidth, sheight, 195, 65, 67, 60);
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            img1.src=img_path1;
 
-            ctx.drawImage(img1, sx, sy, swidth, sheight, 195, 65, 67, 60);
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.drawImage(img2,0,0);
+            img2 = new Image()
+            img2.onload = () => {
+                ctx.drawImage(img2, 0,0);
+            }
+            img2.src=img_path2;
+
+            $(document.body).append(canvas);//添加到文档中可以查看效果
         }
 
     </script>

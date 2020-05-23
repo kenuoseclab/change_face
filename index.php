@@ -14,9 +14,10 @@ if(isset($_SERVER['REQUEST_METHOD']) && strtoupper($_SERVER['REQUEST_METHOD'])==
         $app = new \App\Application();
         $app->setUploadFile($_FILES['file']);
         $result = $app->detect();
+
         echo json_encode([
             'data'=>$result,
-            'img_path'=>$app->getFilePath(),
+            'img_path1'=>$app->getFilePath(),
             'img_path2'=>$app->getFilePath()
         ]);
     }

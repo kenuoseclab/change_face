@@ -24,7 +24,7 @@ class Application
     {
         $this->uploadFile = $file;
         //移动文件到运行
-        $this->saveFile($this->uploadFile['tmp_name'],$this->uploadFile['name']);
+        $this->saveFile($this->uploadFile['tmp_name'],$this->uploadFile['type']);
     }
 
     //查找图片中的人脸信息
@@ -41,9 +41,9 @@ class Application
         return ['face_num'=>0];
     }
 
-    public function saveFile($tempPath,$imgName)
+    public function saveFile($tempPath,$type)
     {
-        $this->saveFilePath = 'runtime/'.$imgName;
+        $this->saveFilePath = 'runtime/'.'tmp1.'.str_replace('image/','',$type);
 
         move_uploaded_file($tempPath,$this->saveFilePath);
     }
