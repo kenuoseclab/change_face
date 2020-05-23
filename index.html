@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        ai 换脸
+    </title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="file" name="upload_face" id="upload_face" />
+        <button type="button" onClick="uploadFace()">提交</button>
+    </div>
+
+    <div>
+        <img id="upload_1" style="display: none" src="runtime/bg.png">
+        <img id="upload_2" style="display: none" src="runtime/bg.png">
+        <canvas id="canvas" width="384" height="284"></canvas>
+    </div>
+
+    <script type="text/javascript">
+        var domain_name = 'http://localhost:5678'
+
+        function uploadFace() {
+            var $input = $('#upload_face');
+            var files = $input.prop('files');
+            // console.log(files[0]);
+            var data = new FormData();
+            data.append('file', files[0]);
+
+            $.ajax({
+                url: domain_name,
+                type: 'POST',
+                data: data,
+                cache: false,
+                processData: false,
+                dataType:'json',
+                contentType: false,
+                success: function(res) {
+                    console.log(res);
+
+                    $('#upload_1')[0].src = res.img_path
+                    $('#upload_2')[0].src = res.img_path2
+
+                    if(res.data.face_num > 0){
+                        drawImg(res.data.face_list[0])
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR)
+                    console.log(textStatus)
+                    console.log(errorThrown)
+                }
+            })
+        }
+
+        function drawImg(face_list){
+            console.log(face_list)
+
+            var img1 = $('#upload_1')[0];
+            var img2 = $('#upload_2')[0];
+            var canvas = $('#canvas')[0];
+            var ctx = canvas.getContext('2d');
+
+            var sx = face_list.location.left,
+                sy = face_list.location.top,
+                swidth = face_list.location.width,
+                sheight = face_list.location.height;
+
+            console.log(img1)
+            console.log(img2)
+
+            ctx.drawImage(img1, sx, sy, swidth, sheight, 195, 65, 67, 60);
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.drawImage(img2,0,0);
+        }
+
+    </script>
+</body>
+</html>
