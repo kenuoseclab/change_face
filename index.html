@@ -64,18 +64,18 @@
                 swidth = face_list.location.width,
                 sheight = face_list.location.height;
 
-            img1 = new Image()
-            img1.onload = () => {
-                ctx.drawImage(img1, sx, sy, swidth, sheight, 195, 65, 67, 60);
-                ctx.globalCompositeOperation = 'source-over';
-            }
-            img1.src=img_path1;
-
             img2 = new Image()
             img2.onload = () => {
                 ctx.drawImage(img2, 0,0);
+                ctx.globalCompositeOperation = 'source-over';
             }
             img2.src=img_path2;
+
+            img1 = new Image()
+            img1.onload = () => {
+                ctx.drawImage(img1, sx, sy, swidth, sheight, 175, 130, 140, 140);
+            }
+            img1.src=img_path1;
 
             $(document.body).append(canvas);//添加到文档中可以查看效果
         }

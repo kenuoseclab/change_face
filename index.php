@@ -18,7 +18,7 @@ if(isset($_SERVER['REQUEST_METHOD']) && strtoupper($_SERVER['REQUEST_METHOD'])==
         echo json_encode([
             'data'=>$result,
             'img_path1'=>$app->getFilePath(),
-            'img_path2'=>$app->getFilePath()
+            'img_path2'=>$app->getBgFilePath()
         ]);
     }
 }else{

@@ -52,4 +52,9 @@ class Application
     {
         return $this->saveFilePath;
     }
+
+    public function getBgFilePath()
+    {
+        return 'runtime/bg.png';
+    }
 }
