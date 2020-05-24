@@ -15,7 +15,8 @@
     </div>
 
     <script type="text/javascript">
-        var domain_name = 'http://193.112.88.159:10000/index.php'
+        var request_url = 'http://127.0.0.1:10000/index.php'
+        var domain_name = 'http://127.0.0.1:10000/'
 
         function uploadFace() {
             var $input = $('#upload_face');
@@ -25,7 +26,7 @@
             data.append('file', files[0]);
 
             $.ajax({
-                url: domain_name,
+                url: request_url,
                 type: 'POST',
                 data: data,
                 cache: false,

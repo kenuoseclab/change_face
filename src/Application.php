@@ -23,6 +23,7 @@ class Application
     public function setUploadFile($file)
     {
         $this->uploadFile = $file;
+
         //移动文件到运行
         $this->saveFile($this->uploadFile['tmp_name'],$this->uploadFile['type']);
     }
@@ -43,14 +44,13 @@ class Application
 
     public function saveFile($tempPath,$type)
     {
-        $this->saveFilePath = 'runtime/'.'tmp1.'.str_replace('image/','',$type);
-
+        $this->saveFilePath = __DIR__.'/../runtime/'.'tmp1.'.str_replace('image/','',$type);
         move_uploaded_file($tempPath,$this->saveFilePath);
     }
 
     public function getFilePath()
     {
-        return $this->saveFilePath;
+        return 'runtime/tmp1.png';
     }
 
     public function getBgFilePath()

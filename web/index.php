@@ -12,15 +12,18 @@ header('Access-Control-Allow-Headers:x-requested-with,content-type');
 if(isset($_SERVER['REQUEST_METHOD']) && strtoupper($_SERVER['REQUEST_METHOD'])=='POST'){
     if ($_FILES['file']['error'] == 0) {
         $app = new \App\Application();
-        $app->setUploadFile($_FILES['file']);
-        $result = $app->detect();
+        if(!empty($_FILES)){
+            $app->setUploadFile($_FILES['file']);
+            $result = $app->detect();
 
-        echo json_encode([
-            'data'=>$result,
-            'img_path1'=>$app->getFilePath(),
-            'img_path2'=>$app->getBgFilePath()
-        ]);
+            echo json_encode([
+                'data'=>$result,
+                'img_path1'=>$app->getFilePath(),
+                'img_path2'=>$app->getBgFilePath()
+            ]);
+            return;
+        }
     }
-}else{
-    echo json_encode(['msg'=>'hello world']);
 }
+echo json_encode(['msg'=>'hello world']);
+
