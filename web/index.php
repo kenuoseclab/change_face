@@ -1,6 +1,6 @@
 <?php
 
-require_once ('vendor/autoload.php');
+require_once ('../vendor/autoload.php');
 
 //$app = new \App\Application();
 
@@ -24,4 +24,3 @@ if(isset($_SERVER['REQUEST_METHOD']) && strtoupper($_SERVER['REQUEST_METHOD'])==
 }else{
     echo json_encode(['msg'=>'hello world']);
 }
-
